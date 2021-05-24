@@ -1,0 +1,475 @@
+html {
+    margin: 0;
+    padding: 0;
+}
+
+* {
+    box-sizing: border-box;
+}
+
+#wrapper {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
+#board {
+    padding: 0;
+    position: relative;
+    display: grid;
+    grid-template-rows: repeat(8, 1fr);
+    grid-template-columns: repeat(8, 1fr);
+    justify-content: center;
+    align-items: center;
+    min-width: 80vh;
+    min-height: 80vh;
+    border: 2px solid black;
+}
+
+.square {
+    width: 10vh;
+    height: 10vh;
+    text-align: center;
+    line-height: 10vh;
+    font-size: 7.5vh;
+    cursor: pointer;
+}
+
+.light {
+    background: rgb(215, 235, 243);
+}
+
+.dark {
+    background: rgb(107, 65, 3);
+}
+
+.black {
+    color: black;
+}
+
+.white {
+    color: silver;
+}
+
+.possibleMove {
+    background: rgb(238, 238, 36);
+}
+
+/* ======== ostylowanie PAWN ======== */
+
+.promoChoice {
+    width: 10vh;
+    height: 40vh;
+    background-color: lightgrey;
+    outline: 1px gray solid;
+    transform: translate(10px, 2px);
+}
+
+.promoChoiceItem:hover {
+    color: white;
+}
+
+.promoChoiceList {
+    margin: 0 0;
+    list-style: none;
+    padding-left: 0;
+}
+
+/* !* ========ostylowanie gameplaySidebar ======== *! */
+
+#gameplaySidebar {
+    position: relative;
+    display: grid;
+    grid-template-rows: 1fr 1fr 5fr 1fr 1fr 1fr;
+    justify-content: center;
+    align-items: center;
+    height: calc(80vh + 4px);
+    border: 2px solid black;
+    border-left: none;
+    background: #eee;
+}
+
+.gameHistoryRecording {
+    height: 100%;
+    width: 100%;
+    font-size: 1.3rem;
+    text-align: center;
+}
+
+.listOfMoves {
+    padding: 6px;
+    width: 100%;
+    overflow-y: scroll;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    font-size: 0.85rem;
+    grid-auto-rows: min-content;
+}
+
+.listOfMoves div {
+    margin: 0.1rem auto;
+}
+
+#blackPlayerName,
+#whitePlayerName {
+    padding: 0.5rem;
+    width: 100%;
+    display: grid;
+    font-size: 1.3rem;
+    font-weight: bold;
+    text-align: center;
+}
+
+/* ======== ostylowanie promocja oraz start gry ======== */
+.endGameCover,
+.startGameCover,
+.promoCover {
+    width: calc(100vh + 15vw);
+    height: 100vh;
+    background: #fff;
+    opacity: 0.4;
+    position: fixed;
+    z-index: 10;
+}
+
+.startSetupBox,
+.endGameBox,
+.promotionWindow {
+    width: 60vh;
+    height: 40vh;
+    display: flex;
+    flex-wrap: wrap;
+    align-content: center;
+    justify-content: space-evenly;
+    flex-direction: column;
+    align-items: center;
+    position: fixed;
+    background-color: #efeaea;
+    outline: 2px black solid;
+    transform: translate(10px, 2px);
+    padding: 1rem;
+    margin-right: 1.2rem;
+    z-index: 100;
+}
+
+.setupBoxTitle {
+    font-size: 5vh;
+}
+
+#playerNamesContainer {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-evenly;
+}
+
+.addPlayerNameContainer {
+    width: 45%;
+}
+
+.addPlayerNameContainer label {
+    width: 45%;
+}
+
+.addPlayerNameContainer label::first-letter {
+    text-transform: uppercase;
+}
+
+.addPlayerNameContainer input {
+    width: 90%;
+}
+
+#playTimeForm {
+    height: 10vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
+}
+
+#playTimeForm div {
+    font-size: 3vh;
+}
+
+#playTimeSelect {
+    margin-top: 1vh;
+    width: 15vw;
+}
+
+#playerNamesForm {
+    height: 10vh;
+    display: flex;
+    flex-direction: column;
+}
+
+.startGameButton {
+    border: 1px solid rgb(205, 205, 23);
+    border-radius: 5px;
+    box-shadow: inset 0 0 5px rgb(205, 205, 23);
+    font-size: 4vh;
+}
+
+.startGameButton:hover,
+.startGameButton:active {
+    opacity: 0.8;
+    cursor: pointer;
+}
+
+.promotionWindowList {
+    margin: 0;
+    list-style: none;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding-left: 0;
+    width: 70%;
+}
+
+.promoTitle {
+    font-size: 6vh;
+}
+
+.promotionWindowListIcon {
+    font-size: 7.5vh;
+}
+
+.promotionWindowListIcon:hover {
+    color: black;
+    opacity: 0.8;
+}
+
+.disabledClock {
+    background-color: #8a8a8a;
+    opacity: 0.5;
+    border: 2px solid #3c3c3c;
+    box-shadow: inset 0 0 5px #3c3c3c;
+}
+
+/* !* ================================== *! */
+
+.endGameBox > p::first-letter {
+    text-transform: capitalize;
+}
+
+.endGameBox > p:first-of-type {
+    font-size: 1.5em;
+    border: 0;
+    margin: 0;
+}
+
+.endGameBox > button {
+    margin-top: 1.5rem;
+    font-size: 2rem;
+}
+
+.gameControls {
+    margin: 0.2rem;
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.button {
+    padding: 0.1rem;
+    border: 1px solid rgb(205, 205, 23);
+    border-radius: 5px;
+    box-shadow: inset 0 0 5px rgb(205, 205, 23);
+    font-size: 0.85rem;
+    margin: 0.1rem;
+}
+
+.button:hover,
+.button:active {
+    opacity: 0.8;
+    cursor: pointer;
+}
+
+@media (max-width: 640px) {
+    #board {
+        min-width: 50vh;
+        min-height: 50vh;
+    }
+
+    #gameplaySidebar {
+        height: calc(50vh + 4px);
+    }
+
+    .recordingListMoves {
+        font-size: 3vh;
+    }
+
+    .blackPlayerTimerContainer,
+    .whitePlayerTimerContainer {
+        width: 100%;
+    }
+
+    .blackPlayerTimer,
+    .whitePlayerTimer {
+        border-radius: 3px;
+        font-size: 3vh;
+    }
+
+    .square {
+        width: 6.25vh;
+        height: 6.25vh;
+        font-size: 4.5vh;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .square i {
+        display: block;
+    }
+
+    .endGameCover,
+    .startSetupBox,
+    .promoChoice {
+        width: 40vh;
+        height: 32vh;
+        padding: 0.5rem;
+    }
+
+    .setupBoxTitle {
+        font-size: 4vh;
+    }
+
+    .addPlayerNameContainer label {
+        font-size: 2vh;
+    }
+
+    #playTimeForm div {
+        font-size: 2.5vh;
+    }
+
+    #playTimeSelect {
+        width: 25vw;
+        margin-top: 1vh;
+    }
+
+    .startGameButton {
+        border-radius: 3px;
+        font-size: 3vh;
+    }
+
+    .promoText {
+        font-size: 3vh;
+    }
+
+    .promoChoiceItem {
+        font-size: 5.5vh;
+        display: block;
+    }
+
+    #blackPlayerName,
+    #whitePlayerName {
+        font-size: 0.75rem;
+        padding: 0.25rem;
+    }
+
+    .button {
+        font-size: 0.6rem;
+        padding: 0;
+    }
+
+    .gameHistoryRecording {
+        font-size: 1rem;
+    }
+
+    .listOfMoves {
+        padding: 3px;
+        font-size: 0.7rem;
+    }
+}
+
+@media (max-width: 420px) {
+    #board {
+        min-width: 35vh;
+        min-height: 35vh;
+    }
+
+    #gameplaySidebar {
+        height: calc(35vh + 4px);
+    }
+
+    .recordingListMoves {
+        font-size: 2vh;
+    }
+
+    .blackPlayerTimerContainer,
+    .whitePlayerTimerContainer {
+        width: 100%;
+    }
+
+    .blackPlayerTimer,
+    .whitePlayerTimer {
+        border-radius: 2px;
+        font-size: 2vh;
+    }
+
+    .square {
+        width: 4.375vh;
+        height: 4.375vh;
+        font-size: 3.2vh;
+    }
+
+    .endGameCover,
+    .startSetupBox,
+    .promoChoice {
+        width: 30vh;
+        height: 24vh;
+    }
+
+    .addPlayerNameContainer label {
+        font-size: 1.5vh;
+    }
+
+    .setupBoxTitle {
+        font-size: 2.5vh;
+    }
+
+    #playTimeForm {
+        height: 8vh;
+    }
+
+    #playTimeForm div {
+        font-size: 2vh;
+    }
+
+    #playTimeSelect {
+        width: 25vw;
+    }
+
+    .startGameButton {
+        border-radius: 2px;
+        font-size: 2vh;
+    }
+
+    .promoText {
+        font-size: 2vh;
+        padding-bottom: 0.5rem;
+    }
+
+    .promoChoiceItem {
+        font-size: 4vh;
+    }
+
+    #blackPlayerName,
+    #whitePlayerName {
+        font-size: 0.6rem;
+    }
+
+    .gameHistoryRecording {
+        font-size: 0.7rem;
+    }
+
+    .button {
+        font-size: 0.6rem;
+        padding: 0;
+    }
+
+    .listOfMoves {
+        padding: 1px;
+        font-size: 0.5rem;
+    }
+}
