@@ -1,6 +1,5 @@
 import { MovesRelatedToPiecePosition } from './types';
 
-
 export const BOARD_SIDE_LENGTH = 8;
 
 export const movesRelated: MovesRelatedToPiecePosition = {
